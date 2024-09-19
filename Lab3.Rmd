@@ -1,0 +1,92 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+|                                                                  |
+|------------------------------------------------------------------|
+| title: STAT 352  |
+| title: Computing Binomial probabilities in R LAB |
+| author: "Anna Panorska"                                          |
+| output:                                                          |
+| html_document:                                                   |
+| df_print: paged                                                  |
+
+NOTE: This file contains some R work to get acquainted with R. 
+
+
+```{r}
+library(broom) 
+library(lattice)
+library(MASS)
+``` 
+ 
+Create 5 random observations from Bin(10, 0.5) and compute their probabilities. 
+
+```{r}
+
+dat<- rbinom(5, 10, 0.5) #creating the data
+cat("Observations:", dat, "\n") # this command prints to the screen
+dat #looking at the data
+
+#Computing probabilities:
+
+binprob<-dbinom(dat, 10, 0.5)
+cat("Probabilities:", binprob, "\n")
+binprob
+```
+
+Suppose X has a binomial distribution with the number of trials 20 and probability of success 0.2. Find the following probabilities: 
+$P(X = 10), P(X = 2), P(X = 5), P(X \leq 3), P( X < 3), P( X > 3), P(X \geq 3), P( 2 < X \leq 7), P(2 \leq X \leq 7), 
+P(2 \leq X < 7), P(2 < X < 7)$.
+
+```{r}
+#P(X = 10)
+
+p1<-dbinom(10, 20, 0.2)
+cat("P(X = 10)=", p1, "\n")
+cat("\n") # empty line in the output
+#P(X = 2)
+
+dbinom(2, 20, 0.2)
+p2<-dbinom(2, 20, 0.2)
+cat("P(X = 2)=", p2, "\n")
+cat("\n")
+
+#P(X = 5)
+
+dbinom(5, 20, 0.2)
+p3<-dbinom(5, 20, 0.2)
+cat("P(X = 5)=", p3, "\n")
+
+cat("\n")
+
+#P(X \leq 3) 
+# For this calculation we can add individual probabilities of 0, 1, 2, and 3, OR use pbinom function in R
+
+cat("Summing probs we get:", "\n")
+dbinom(0, 20, 0.2)+dbinom(1, 20, 0.2)+dbinom(2, 20, 0.2)+dbinom(3, 20, 0.2)
+
+cat("Using the pbinom we get:", "\n")
+pbinom(3, 20, 0.2, lower.tail=TRUE)
+
+# P( X < 3) = P(X <= 2)
+pbinom(2, 20, 0.2, lower.tail=TRUE)
+
+# P( X > 3)
+pbinom(3, 20, 0.2, lower.tail=FALSE)
+
+# P( 2 < X <= 7) = P(X <= 7) - P(X <= 2)
+pbinom(7, 20, 0.2, lower.tail=TRUE) - pbinom(2, 20, 0.2, lower.tail=TRUE)
+
+# P(2 <= X <= 7) = P(X <= 7) - P(X < 2) = P(X <= 7) - P(X <= 2) + P(X = 2), or
+# P(2 <= X <= 7) = P(X <= 7) - P(X <= 1)
+pbinom(7, 20, 0.2, lower.tail=TRUE) - pbinom(2, 20, 0.2, lower.tail=TRUE) + dbinom(2, 20, 0.2)
+pbinom(7, 20, 0.2, lower.tail=TRUE) - pbinom(1, 20, 0.2, lower.tail=TRUE)
+
+# P(2 <= X < 7) = P(X < 7) - P(X < 2) = P(X <= 6) - P(X <= 1)
+pbinom(6, 20, 0.2, lower.tail=TRUE) - pbinom(1, 20, 0.2, lower.tail=TRUE)
+
+# P(2 < X < 7) = P(X < 7) - P(X <= 2) = P(X <= 6) - P(X <= 2)
+pbinom(6, 20, 0.2, lower.tail=TRUE) - pbinom(2, 20, 0.2, lower.tail=TRUE)
+```

@@ -1,0 +1,57 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+|                                                                  |
+|------------------------------------------------------------------|
+| title: STAT 352  |
+| title: Start R LAB |
+| author: "Anna Panorska"                                          |
+| output:                                                          |
+| html_document:                                                   |
+| df_print: paged                                                  |
+
+NOTE: This file contains some R work to get acquainted with R. 
+
+
+```{r}
+library(broom) 
+library(lattice)
+library(MASS)
+``` 
+ 
+Create a data set:
+
+```{r}
+
+dat<-c(1, 3, 5, 5, 7, 10) #creating the data
+dat #looking at the data
+```
+
+Create another data set and add their values (vector arithmetic)
+
+```{r}
+
+dat1<-c(-2, 4, -6, 1, 0, -7)
+
+datsum<-dat+dat1
+datsum
+```
+
+Find the mean of a data set
+
+```{r}
+mean(dat)
+```
+
+Set up your working directory as the folder in which you will save all output and from where you can upload data. Below is my example, but yours will be different. 
+```{r}
+
+```
+
+To start use GUI on the right hand side. Decide on the folder using the ... button in the Home line.
+
+Then, use the gear wheel button to set this folder as your Working Directory.
+
+Now, knit this RMarkdown file. See that the pdf of the output went to the Working Directory.
